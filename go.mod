@@ -7,7 +7,7 @@ require (
 	github.com/dtm-labs/driver-gozero v0.0.7
 	github.com/lithammer/shortuuid/v3 v3.0.7
 	github.com/zeromicro/go-zero v1.5.5
-	google.golang.org/grpc v1.57.0
+	google.golang.org/grpc v1.56.2
 	google.golang.org/protobuf v1.31.0
 )
 

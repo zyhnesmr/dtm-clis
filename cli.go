@@ -38,3 +38,6 @@ func SagaBarrier() {
 	logger.FatalIfError(err)
 	fmt.Println(saga.Gid)
 }
+
+func Saga() {
+}
