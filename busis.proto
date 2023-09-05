@@ -1,0 +1,26 @@
+syntax = "proto3";
+option go_package="dtm-clis/busis";
+package busis;
+
+// goctl rpc protoc busis.proto --go_out=./busis --go_opt=paths=source_relative --go-grpc_out=./busis --go-grpc_opt=paths=source_relative --zrpc_out=./
+
+service Busis{
+  rpc AddMoney(AddReq)returns(Empty);
+  rpc DelMoney(AddReq)returns(Empty);
+}
+
+message Empty{
+
+}
+
+message AddReq{
+  int64 userId = 1;
+  int64 money = 2;
+}
+
+message DelReq{
+  int64 userId = 1;
+  int64 money = 2;
+}
+
+//goctl model pg datasource --url "postgres://postgres:$LOCAL_K8S_PG_PASS@192.168.2.100:32007/ohmyfans?sslmode=disable" -s busi -t wallets --strict --dir ./model/wallets --style go_zero
