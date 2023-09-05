@@ -11,7 +11,7 @@ import (
 	"github.com/lithammer/shortuuid/v3"
 )
 
-var dtmSvc = "k8s://database/dtm-svc:9091"
+var dtmSvc = "k8s://ohmyfans/dtm-svc:9091"
 
 func main() {
 	defer func() {
