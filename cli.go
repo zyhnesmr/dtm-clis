@@ -3,7 +3,7 @@ package main
 import (
 	"dtm-clis/busis"
 	"fmt"
-	"time"
+	"net/http"
 
 	"github.com/dtm-labs/client/dtmcli/logger"
 	"github.com/dtm-labs/client/dtmgrpc"
@@ -20,9 +20,13 @@ func main() {
 		}
 	}()
 
-	for {
+	http.HandleFunc("/saga", func(writer http.ResponseWriter, request *http.Request) {
 		SagaBarrier()
-		time.Sleep(time.Second * 4)
+	})
+
+	err := http.ListenAndServe(":8888", nil)
+	if err != nil {
+		panic(err)
 	}
 }
 
@@ -32,7 +36,7 @@ func SagaBarrier() {
 	delReq := &busis.AddReq{UserId: 2, Money: 50}
 	saga := dtmgrpc.NewSagaGrpc(dtmSvc, gid).
 		Add("k8s://ohmyfans/dtm-rpc-svc:9091/busis.Busis/AddMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/DelMoney", addReq).
-		Add("k8s://ohmyfans/dtm-rpc-svc:9091/busis.Busis/AddMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/DelMoney", delReq)
+		Add("k8s://ohmyfans/dtm-rpc-svc:9091/busis.Busis/DelMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/AddMoney", delReq)
 
 	err := saga.Submit()
 	logger.FatalIfError(err)
