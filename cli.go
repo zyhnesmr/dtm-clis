@@ -31,8 +31,8 @@ func SagaBarrier() {
 	addReq := &busis.AddReq{UserId: 1, Money: 50}
 	delReq := &busis.AddReq{UserId: 2, Money: 50}
 	saga := dtmgrpc.NewSagaGrpc(dtmSvc, gid).
-		Add("k8s://ohmyfans/dtm-rpc:9091/busis.Busis/AddMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/DelMoney", addReq).
-		Add("k8s://ohmyfans/dtm-rpc:9091/busis.Busis/AddMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/DelMoney", delReq)
+		Add("k8s://ohmyfans/dtm-rpc-svc:9091/busis.Busis/AddMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/DelMoney", addReq).
+		Add("k8s://ohmyfans/dtm-rpc-svc:9091/busis.Busis/AddMoney", "k8s://ohmyfans/dtm-rpc:9091/busis.Busis/DelMoney", delReq)
 
 	err := saga.Submit()
 	logger.FatalIfError(err)
